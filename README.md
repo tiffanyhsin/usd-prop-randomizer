@@ -13,13 +13,37 @@ It helps artists find repeated props by name and add size and rotation variation
 - Maya USD plugin
 - PySide6, included with Maya
 
-## How to Run
+## Install the Shelf Button
 
-1. Open Maya.
-2. Open **Windows → General Editors → Script Editor**.
-3. Switch to a **Python** tab.
-4. Open `Randomizer.py`, or paste its contents into the tab.
-5. Select the entire script and press **Ctrl + Enter**.
+1. Download the repository using **Code > Download ZIP** and extract it.
+2. Open Maya 2027 and select the shelf where you want the button.
+3. Drag `install_shelf.py` from the extracted folder into Maya's viewport.
+4. Click the new **USD Rand** shelf button to open the tool.
+
+The installer copies `Randomizer.py` to Maya's user scripts directory and saves the shelf. Keep both Python files together when installing. Reinstalling updates this tool's existing button on the selected shelf instead of creating another one. Restart Maya after installing an updated version if the tool was already loaded.
+
+If drag-and-drop does not work, run this in a **Python** tab of Maya's Script Editor, then choose `install_shelf.py` from the extracted folder:
+
+```python
+import runpy
+import maya.cmds as cmds
+files = cmds.fileDialog2(fileMode=1, caption="Choose install_shelf.py", fileFilter="Python files (*.py)")
+if files:
+    runpy.run_path(files[0], run_name="__main__")
+```
+
+### Open manually after installation
+
+```python
+import Randomizer
+Randomizer.show()
+```
+
+Clicking the button again brings the same window forward. Closing and reopening it preserves the tool's undo history for the current Maya session.
+
+### Uninstall
+
+Remove the **USD Rand** button through Maya's Shelf Editor. To remove the installed script, locate Maya's user scripts directory with `cmds.internalVar(userScriptDir=True)` and delete only the installed `Randomizer.py`. Restart Maya.
 
 ## How to Use
 
